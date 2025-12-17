@@ -12,6 +12,7 @@ import time
 import requests
 from urllib.parse import urljoin, urlparse
 import random
+import parser
 
 
 class BasicCrawler:
@@ -82,7 +83,7 @@ class AntiAntiCrawler:
         self.ua = UserAgent()
         self.driver = None
 
-    def setup_selenium(self, headless=False):
+    def setup_selenium(self, headless=True):
         """配置Selenium浏览器驱动"""
         print(headless)
         options = webdriver.ChromeOptions()
@@ -139,8 +140,9 @@ class AntiAntiCrawler:
 # content = crawler.crawl_page('/youhui/')
 # print(content)
 
-
+# https://m.smzdm.com/p/164712502/
 # 使用示例
 crawler = AdvancedCrawler('http://m.smzdm.com', use_selenium=True)
 content = crawler.crawl_dynamic_content('/youhui/')
-print(content)
+details = parser.extract_smzdm_deals(content)
+print(details)
