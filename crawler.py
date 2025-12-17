@@ -146,3 +146,15 @@ crawler = AdvancedCrawler('http://m.smzdm.com', use_selenium=True)
 content = crawler.crawl_dynamic_content('/youhui/')
 details = parser.extract_smzdm_deals(content)
 print(details)
+# curl  -d '{"msg_type":"text","content":{"text":"<at user_id=\"all\"></at> test1[狗东(http://www.baidu.com)]"}}' -H "Content-Type: application/json" https://open.feishu.cn/open-apis/bot/v2/hook/3a1f07ce-e3be-4429-a99b-f06885f053d6
+# https://guangdiu.com/
+# https://s.manmanbuy.com/pc/search/result?c=discount&keyword=%E7%A0%81%E8%A1%A8
+# http://wabcw.info/
+# https://www.zhizhizhi.com/
+# https://www.feimaibook.com/
+# https://www.meidebi.com/?u_atoken=61b1d6ef1c7453e846c4933bf19d5045&u_asig=ac11000117659880431724837e5442
+# https://www.meidebi.com/
+# https://www.shihuo.cn/
+# https://yifen.com/
+# https://etao.com/
+# 喵喵折
