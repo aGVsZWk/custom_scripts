@@ -38,6 +38,7 @@ headers = client.sign_headers_get(
     params={"num": "30", "cursor": "", "user_id": "123"}
 )
 print(headers)
+{'x-s': 'XYS_2UQhPsHCH0c1Pjh9HjIj2erjwjQhyoPTqBPT49pjHjIj2eHjwjQgynEDJ74AHjIj2ePjwjQTJdPIPAZlg98yGLTl4rIMcDhMznlkt9z1JUR9pFFF2dmn+n8awepnzaRx2bD3cDWUyfEy+FDF8r4wJrMEpUVI4/SFLgSIpnzFLo+kG0Z3adbOyL4FP7iE+omaLSQkwBVInD8D4FEc+LRVprSnyd8YaB4gab8lyfznN9QpPrkHaMY/ySkn4/86Ppz+c9EIqMQCLDkcpnbLP9IUJsRDPBTnGFQP4gqMwepC//YHJeDROaHVHdWFH0ijHdF=', 'x-s-common': '2UQAPsHC+aIjqArjwjHjNsQhPsHCH0rjNsQhPaHCH0c1Pjh9HjIj2eHjwjQgynEDJ74AHjIj2ePjwjQhyoPTqBPT49pjHjIj2ecjwjHFN0W9N0ZjNsQh+aHCH0rE+ALAPBGFPfHEPnTT+0+9J74iyf+7JebI+dLE2nI94gzl4A+6PBMfPAZIPeZE+ALMweZjNsQh+jHCHjHVHdW7H0ijHjIj2eWjwjQQPAYUaBzdq9k6qB4Q4fpA8b878FSet9RQzLlTcSiM8/+n4MYP8F8LagY/P9Ql4FpUzfpS2BcI8nT1GFbC/L88JdbFyrSiafp/8bQhqgb78rS9cg+gcf+i4MmF4B4T+e8NpgkhanWIqAmPa7+xqg412/4rnDS9J7+hGSmx2pkMcLSia9prG/4A8fkLprkl4bH3qg4mqBzI/DSe4nMwa/YN2S87LFSe89p34gzH47b7zrSbzdbQzaRAprSyyLShqDMQ4f4S8ob7LjV7qbmCnDEA8bDA8n8l4rbQyFESPM8787bl4omI4gzha7kdqAbgqBpQcM8ganYzPsRc4bbNpd4ma/+yPfRT8Bpkqg4faL+m8pzn4oQQzaV3aLpTJf+f8Bpx87k8qfR6q98l4FRyp9RS8rlrzrQ687+xndmsagYNq9zn4BbQy78S8db7LfQ+/rSo80zsa/P7q7Yl4rL6pFRS2emV+rSiLg+Qz/YN49hFyLDAngrhJrpdanTP2rQn49TQcMknPfcA8nkQ87Pl4g4aag8d8/mfPBpx8gpcaLp98/8+JLzE4g4ManSN8pzfPo+hJaRSPp8F+rlAafp84g4bag8LqoiIcnpDqg4bqeSmqM+n494Q2bbUag83y9Rn4F4Cpdq3+rIFzDQY/fpkqrESzb87PrS9cgPlqApAyM+QzDS3J7+/q04ApfE+zLS9+d+rqg4UaLPhcdmn4er6Lo4SaLL7qFzl47YQyLEAP7p7+LS34d+DqgzV47p7/BRn4b4Q2ezDaL++8/zdarr3aLESygbFyDSiqdzQyAmSydb7J9E8Lgk0GnpAzrQnpLSb/nH3qgz62p8F/rSea7+hLo43+BlS8/bI/7+k/nMPanSmq7W7J7+L4gzEGMm7qLSePBpfpdzpanSw8pzp4pmQcFTSnnuA8p4n4ApQ2e+APgp74LksngbQyrD3a/PMqM8P+fp3JDkS8o+tqM+n4FEQy9Y9aL+/+aRc4F+QcF4iaLptq9TjnSQ7JSGRHjIj2eDjw0WM+/LE+AcU+jIj2erIH0iINsQhP/rjwjQ1J7QTGnIjKc==', 'x-t': '1767455522096', 'x-b3-traceid': '1b0807e2f16bf538', 'x-xray-traceid': 'cdc2477e984f12c7d9722169551051dd'}
 
 # 返回的 headers 包含以下字段:
 # {
@@ -109,9 +110,11 @@ response = requests.post(
     headers=base_headers,
     cookies=cookies
 )
-print(response.json())
+resp = response.json()
+print(resp)
+items = resp['data']["items"]
 result = []
-for item in response.json():
+for item in items:
     t = {
         "id": item.get("model_type", ""),   # 分享数
         "xsec_token": item.get("xsec_token", ""),
@@ -126,7 +129,8 @@ for item in response.json():
     for t in item.get("corner_tag_info", []):
         if t.get("type") == "publish_time":
             t["publish_time"] = t["publish_time"]
-
+    result.append(t)
+print(result)
 # 方式1: 使用 update 方法更新现有 headers（推荐）
 # base_headers = {
 #     "User-Agent": "Mozilla/5.0...",
